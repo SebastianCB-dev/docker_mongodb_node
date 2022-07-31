@@ -11,8 +11,17 @@ async function databaseConnection() {
   return await mongoose.connect('mongodb://sebastiancb:password@localhost:27017/pruebaDocker?authSource=admin');
 }
 
-const conn = databaseConnection();
-console.log(conn)
+let conn;
+try {
+  conn = databaseConnection();
+}
+catch(e) {
+  console.log('Error connecting with Mongo...:', e);
+}
+
+if(conn) {
+  console.log('Connection with database successfully');
+}
 
 console.log(conn);
 app.get('/', (req, res) => {
