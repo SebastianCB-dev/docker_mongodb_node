@@ -6,17 +6,25 @@ const app = express();
 app.use(express.json());
 
 // MongoDB
-const conn = databaseConnection().then(() => {
-  console.log('Connection with database successfully');
-})
-.catch(e => {
-  console.log('Error connecting with Mongo...:', e);
-}) 
+const conn = databaseConnection()
+              .then(() => {
+                console.log('Connection with database successfully');
+              })
+              .catch(e => {
+                console.log('Error connecting with Mongo...:', e);
+              }) 
 
+// Model
+const People = mongoose.model('People', {name: String, lastname: String, age: Number});
+const example1 = new People({name: 'Sebastián', lastname: 'Carrillo', age: 21});
+example1.save().then(() => {console.log('Sebastián was saved')});
+
+// Routes
 app.get('/', async(req, res) => {
+  const search = await People.find({name: 'Sebastián'})
   res.json({
     'status': 'ok',
-    'data': luis
+    'data': search
   });
   console.log('Get Petition');
 })
