@@ -15,9 +15,9 @@ const conn = databaseConnection()
               }) 
 
 // Model
-const People = mongoose.model('People', {name: String, lastname: String, age: Number});
-const example1 = new People({name: 'Sebastián', lastname: 'Carrillo', age: 21});
-example1.save().then(() => {console.log('Sebastián was saved')});
+// const People = mongoose.model('People', {name: String, lastname: String, age: Number});
+// const example1 = new People({name: 'Sebastián', lastname: 'Carrillo', age: 21});
+// example1.save().then(() => {console.log('Sebastián was saved')});
 
 // Routes
 app.get('/', async(req, res) => {
