@@ -15,24 +15,41 @@ const conn = databaseConnection()
               }) 
 
 // Model
-// const People = mongoose.model('People', {name: String, lastname: String, age: Number});
-// const example1 = new People({name: 'Sebastián', lastname: 'Carrillo', age: 21});
+const People = mongoose.model('People', {name: String, lastname: String, age: Number, id: Number});
+// const example1 = new People({name: 'Sebastián', lastname: 'Carrillo', age: 21, id: 1});
 // example1.save().then(() => {console.log('Sebastián was saved')});
 
 // Routes
 app.get('/', async(req, res) => {
-  const search = await People.find({name: 'Sebastián'})
+  res.send({
+    status: 'ok',
+    msg: 'Welcome to this API.'
+  });  
+});
+
+app.get('/api/users/:id', async(req, res) => {
+  const id = req.params.id;
+  // Validar numero
+  if (isNaN(id)) {
+    res.status(400).send({
+      status: 'error',
+      msg: 'ID invalido (debe ser un numero).'
+    });
+    return;
+  }
+  // Validar
+  const search = await People.find({ id })
   res.json({
     'status': 'ok',
     'data': search
   });
-  console.log('Get Petition');
-})
+});
 
 app.post('/', (req, res) => {
 
 });
 
-app.listen(process.env.PORT, () => {
-  console.log('Server listening in:', process.env.PORT);
+const PORT = process.env.PORT || 9999;
+app.listen(PORT, () => {
+  console.log('Server listening in:', PORT);
 })
